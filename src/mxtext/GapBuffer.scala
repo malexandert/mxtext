@@ -44,6 +44,44 @@ package mxtext {
 		
 		def gapbuf_forward = {
 		  assert(this.is_gapbuf)
+		  if (!this.gapbuf_at_right && !this.gapbuf_full) {
+			  this.buffer(this.gap_start) = this.buffer(this.gap_end) 
+			  this.buffer(this.gap_end) = 0
+			  this.gap_end = this.gap_end + 1
+			  this.gap_start = this.gap_start + 1
+		  } else if (!this.gapbuf_at_right && this.gapbuf_full) {
+		      this.gap_start += 1
+		      this.gap_end += 1
+		  }
+		}
+		
+		def gapbuf_backward = {
+		    assert(this.is_gapbuf)
+		    if (!this.gapbuf_at_left && !this.gapbuf_full) {
+			    this.buffer(this.gap_end - 1 ) = this.buffer(this.gap_start - 1) 
+			    this.buffer(this.gap_start - 1) = 0
+			    this.gap_end -= 1
+			    this.gap_start -= 1
+		  } else if (!this.gapbuf_at_left && this.gapbuf_full) {
+			  	this.gap_start -= 1
+			  	this.gap_end -= 1
+		  }
+		}
+		
+		def gapbuf_insert (c : Char) = {
+		    assert(this.is_gapbuf)
+		    if (!this.gapbuf_full) {
+		    	this.buffer(this.gap_start) = c
+		    	this.gap_start += 1 
+		    }
+		}
+		
+		def gapbuf_delete = {
+		  assert(this.is_gapbuf)
+		  if (!this.gapbuf_empty) {
+			  this.buffer(this.gap_start - 1) = 0
+			  this.gap_start -= 1
+		  }
 		}
 	}
 }
