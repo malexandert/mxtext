@@ -14,27 +14,48 @@ class DoublyLinkedList[T] (init : T) {
 	point.prev = Some(start)
 	point.next = Some(end)
 
+	/**
+	 * Checks if a DLL is at its minimum (a start, a node, and an end)
+	 */
+	def dll_min = start.next.get == point && end.prev.get == point
 	
-	def dll_min = start.next.get == point && end.prev.get  == point
-	
+	/**
+	 * Checks if the point all the way at the
+	 * left of the DLL (the node after the start)
+	 */
 	def dll_pt_at_left = {
 		this.point == this.start.next.get
 	}
 	
+	/**
+	 * Checks if the point is all the way at
+	 * the right of the DLL (the node before the end)
+	 */
 	def dll_pt_at_right = {
 		this.point == this.end.prev.get
 	}
 	
+	/**
+	 * Moves the DLL point one node forward. If the DLL point
+	 * is at the right, it throws an assertion error
+	 */
 	def dll_pt_forward = {
 		assert(!this.dll_pt_at_right)
 		this.point = this.point.next.get
 	}
 	
+	/**
+	 * Moves the DLL point one node backward. If the DLL point
+	 * is at the left, it throws an assertion error
+	 */
 	def dll_pt_backward = {
 		assert(!this.dll_pt_at_left)
 		this.point = this.point.prev.get
 	}
 	
+	/**
+	 * Deletes the node that's currently the point in the DLL
+	 */
 	def dll_pt_delete = {
 		assert(!this.dll_min)
 		if (this.point.prev.get == this.start) {
@@ -53,12 +74,18 @@ class DoublyLinkedList[T] (init : T) {
 	}
 }
 
+/**
+ * A node in the doubly-linked list
+ */
 class Node[T]() {
 	
 	var prev : Option[Node[T]] = None
 	var next : Option[Node[T]] = None
 	var data : Option[T] = None
 	
+	/**
+	 * Optional constructor for a node with data
+	 */
 	def this(data : T) = {
 		this()
 		this.data = Some(data)

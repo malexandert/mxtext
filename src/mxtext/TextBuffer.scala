@@ -106,7 +106,7 @@ class TextBuffer {
 	}
 	
 	/**
-	 * Insers a character where the cursor is currently
+	 * Inserts a character where the cursor is currently
 	 */
 	def insert (c : Char) = {
 		if (this.buffer.point.data.get.gapbuf_full) {
